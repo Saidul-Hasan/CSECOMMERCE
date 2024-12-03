@@ -1,5 +1,5 @@
 from django.db import models
-
+from .models import Item, Order, OrderItem
 class Item(models.Model):
     title = models.CharField(max_length=200)
     price = models.IntegerField()
@@ -11,7 +11,7 @@ class Item(models.Model):
 
 
 class OrderItem(models.Model):
-    user = models.ForeignKey(user,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     item = models.ForeignKey(Item,on_delete=models.CASCADE)
     ordered = models.BooleanField(default=False)
     quantity = models.IntegerField(default=1)
@@ -21,7 +21,7 @@ class OrderItem(models.Model):
 
 
 class Order(models.Model):
-    user = models.ForeignKey(user, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     items = models.ManyToManyField('OrderItem')
     ordered = models.BooleanField(default=False)
     start_date = models.DateTimeField(auto_now_add=True)
